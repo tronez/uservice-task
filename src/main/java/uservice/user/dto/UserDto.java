@@ -36,10 +36,10 @@ public class UserDto {
         return phoneNumber;
     }
 
-    public UserDto(Long id, String lastName, String firstName, Set<EmailDto> emails, Set<PhoneNumberDto> phoneNumber) {
+    public UserDto(Long id, String firstName, String lastName, Set<EmailDto> emails, Set<PhoneNumberDto> phoneNumber) {
         this.id = id;
-        this.lastName = lastName;
         this.firstName = firstName;
+        this.lastName = lastName;
         this.emails = emails;
         this.phoneNumber = phoneNumber;
     }

@@ -6,7 +6,7 @@ plugins {
 
 group = 'com.uservice'
 version = '1.0-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = '10'
 
 repositories {
     mavenCentral()
@@ -18,6 +18,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.3.6.RELEASE'
     runtimeOnly 'com.h2database:h2'
+    // https://mvnrepository.com/artifact/io.rest-assured/rest-assured
+    testCompile group: 'io.rest-assured', name: 'rest-assured', version: '3.0.0'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

@@ -1,7 +1,5 @@
 package uservice.user.dto;
 
-import javax.validation.constraints.Size;
-
 public class PhoneNumberDto {
 
     private Long id;

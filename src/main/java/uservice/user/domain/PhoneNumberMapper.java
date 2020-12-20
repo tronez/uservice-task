@@ -16,8 +16,10 @@ class PhoneNumberMapper {
         PhoneNumber phoneNumber = new PhoneNumber();
         phoneNumber.setId(dto.getId());
         phoneNumber.setNumber(dto.getNumber());
-        repository.findById(dto.getUserId())
-                .ifPresent(phoneNumber::setUser);
+        if (dto.getId() != null) {
+            repository.findById(dto.getUserId())
+                    .ifPresent(phoneNumber::setUser);
+        }
 
         return phoneNumber;
     }

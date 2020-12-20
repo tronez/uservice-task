@@ -16,9 +16,10 @@ class EmailMapper {
         Email email = new Email();
         email.setId(dto.getId());
         email.setMail(dto.getMail());
-        repository.findById(dto.getUserId())
-                .ifPresent(email::setUser);
-
+        if (dto.getId() != null) {
+            repository.findById(dto.getUserId())
+                    .ifPresent(email::setUser);
+        }
         return email;
     }
 }

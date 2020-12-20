@@ -9,12 +9,10 @@ import java.util.stream.Collectors;
 @Component
 class UserMapper {
 
-    private UserRepository repository;
     private EmailMapper emailMapper;
     private PhoneNumberMapper phoneNumberMapper;
 
-    UserMapper(UserRepository repository, EmailMapper emailMapper, PhoneNumberMapper phoneNumberMapper) {
-        this.repository = repository;
+    UserMapper(EmailMapper emailMapper, PhoneNumberMapper phoneNumberMapper) {
         this.emailMapper = emailMapper;
         this.phoneNumberMapper = phoneNumberMapper;
     }
@@ -35,6 +33,8 @@ class UserMapper {
 
         entity.setEmails(emails);
         entity.setPhoneNumber(phoneNumbers);
+        emails.forEach(email -> email.setUser(entity));
+        phoneNumbers.forEach(phoneNumber -> phoneNumber.setUser(entity));
 
         return entity;
     }
