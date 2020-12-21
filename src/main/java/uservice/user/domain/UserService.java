@@ -3,6 +3,7 @@ package uservice.user.domain;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import uservice.exception.ResourceNotFoundException;
 import uservice.user.dto.UserDto;
 
 @Service
@@ -25,13 +26,13 @@ public class UserService {
     public UserDto findById(Long id) {
         return repository.findById(id)
                 .map(User::toDto)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+                .orElseThrow(() -> new ResourceNotFoundException("User with given id was not found"));
     }
 
     public UserDto findByLastName(String lastName) {
         return repository.findAllByLastNameContaining(lastName)
                 .map(User::toDto)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+                .orElseThrow(() -> new ResourceNotFoundException("User with given last name was not found"));
     }
 
     public void delete(Long id) {

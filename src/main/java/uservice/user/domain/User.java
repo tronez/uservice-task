@@ -77,6 +77,6 @@ class User {
                 .map(PhoneNumber::toDto)
                 .collect(Collectors.toSet());
 
-        return new UserDto(id, lastName, firstName, emailDtos, phoneNumberDtos);
+        return new UserDto(id, firstName, lastName, emailDtos, phoneNumberDtos);
     }
 }
