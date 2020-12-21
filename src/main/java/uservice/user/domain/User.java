@@ -28,44 +28,49 @@ class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PhoneNumber> phoneNumber;
 
-    Long getId() {
+    public Long getId() {
         return id;
     }
 
-    String getLastName() {
+    public User setId(Long id) {
+        this.id = id;
+        return this;
+    }
+
+    public String getLastName() {
         return lastName;
     }
 
-    String getFirstName() {
+    public User setLastName(String lastName) {
+        this.lastName = lastName;
+        return this;
+    }
+
+    public String getFirstName() {
         return firstName;
     }
 
-    Set<Email> getEmails() {
+    public User setFirstName(String firstName) {
+        this.firstName = firstName;
+        return this;
+    }
+
+    public Set<Email> getEmails() {
         return emails;
     }
 
-    Set<PhoneNumber> getPhoneNumber() {
+    public User setEmails(Set<Email> emails) {
+        this.emails = emails;
+        return this;
+    }
+
+    public Set<PhoneNumber> getPhoneNumber() {
         return phoneNumber;
     }
 
-    void setId(Long id) {
-        this.id = id;
-    }
-
-    void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    void setEmails(Set<Email> emails) {
-        this.emails = emails;
-    }
-
-    void setPhoneNumber(Set<PhoneNumber> phoneNumber) {
+    public User setPhoneNumber(Set<PhoneNumber> phoneNumber) {
         this.phoneNumber = phoneNumber;
+        return this;
     }
 
     UserDto toDto() {

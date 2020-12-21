@@ -1,8 +1,6 @@
 package uservice.user.domain;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 import uservice.exception.ResourceNotFoundException;
 import uservice.user.dto.UserDto;
 

@@ -14,8 +14,10 @@ class PhoneNumberMapper {
 
     PhoneNumber toEntity(PhoneNumberDto dto) {
         PhoneNumber phoneNumber = new PhoneNumber();
-        phoneNumber.setId(dto.getId());
-        phoneNumber.setNumber(dto.getNumber());
+        phoneNumber
+                .setId(dto.getId())
+                .setNumber(dto.getNumber());
+
         if (dto.getId() != null) {
             repository.findById(dto.getUserId())
                     .ifPresent(phoneNumber::setUser);

@@ -14,8 +14,10 @@ class EmailMapper {
 
     Email toEntity(EmailDto dto) {
         Email email = new Email();
-        email.setId(dto.getId());
-        email.setMail(dto.getMail());
+        email
+                .setId(dto.getId())
+                .setMail(dto.getMail());
+
         if (dto.getId() != null) {
             repository.findById(dto.getUserId())
                     .ifPresent(email::setUser);

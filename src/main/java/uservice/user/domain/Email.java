@@ -22,28 +22,31 @@ class Email {
     @JoinColumn(name = "user_id")
     private User user;
 
-    Long getId() {
+    public Long getId() {
         return id;
     }
 
-    void setId(Long id) {
+    public Email setId(Long id) {
         this.id = id;
+        return this;
     }
 
-    String getMail() {
+    public String getMail() {
         return mail;
     }
 
-    void setMail(String mail) {
+    public Email setMail(String mail) {
         this.mail = mail;
+        return this;
     }
 
-    User getUser() {
+    public User getUser() {
         return user;
     }
 
-    void setUser(User user) {
+    public Email setUser(User user) {
         this.user = user;
+        return this;
     }
 
     EmailDto toDto() {
