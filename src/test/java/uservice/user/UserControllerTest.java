@@ -26,7 +26,7 @@ public class UserControllerTest {
     @Test
     @DisplayName("Should return 201 Http status with body and uri pointing to newly created resource")
     @Order(1)
-    public void testSave1() {
+    public void testSave() {
 
         final UserDto returnedUser = given()
                 .port(port)
@@ -47,7 +47,7 @@ public class UserControllerTest {
     @Test
     @DisplayName("Should return 200 with body containing user with matching id")
     @Order(2)
-    void testReturnById1() {
+    void testReturnById() {
 
         given()
                 .port(port)
@@ -62,7 +62,7 @@ public class UserControllerTest {
     @Test
     @DisplayName("Should return 200 with body containing user with matching lastname")
     @Order(3)
-    void testReturnByName1() {
+    void testReturnByName() {
 
         given()
                 .port(port)
@@ -76,7 +76,7 @@ public class UserControllerTest {
     @Test
     @DisplayName("Should return 204 on resource deletion")
     @Order(4)
-    void testDelete1() {
+    void testDelete() {
 
         given()
                 .port(port)
@@ -89,5 +89,7 @@ public class UserControllerTest {
     private void assertEqualUser(UserDto newUser, UserDto retrievedUser) {
         assertEquals(newUser.getFirstName(), retrievedUser.getFirstName());
         assertEquals(newUser.getLastName(), retrievedUser.getLastName());
+        assertEquals(newUser.getEmails().size(), retrievedUser.getEmails().size());
+        assertEquals(newUser.getPhoneNumber().size(), retrievedUser.getPhoneNumber().size());
     }
 }
