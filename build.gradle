@@ -6,7 +6,7 @@ plugins {
 
 group = 'com.uservice'
 version = '1.0-SNAPSHOT'
-sourceCompatibility = '10'
+sourceCompatibility = '11'
 
 repositories {
     mavenCentral()
@@ -28,4 +28,5 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    systemProperty 'spring.profiles.active', 'local'
 }
