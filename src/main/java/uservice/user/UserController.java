@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import uservice.user.domain.UserService;
+import uservice.user.dto.EmailDto;
+import uservice.user.dto.NewEmailDTO;
+import uservice.user.dto.NewPhoneNumberDTO;
+import uservice.user.dto.PhoneNumberDto;
 import uservice.user.dto.UserDto;
 
 import javax.validation.Valid;
@@ -20,48 +24,74 @@ import java.net.URI;
 @RequestMapping("/api/user")
 public class UserController {
 
-    private UserService service;
+    private UserService userService;
 
     public UserController(UserService userService) {
-        this.service = userService;
+        this.userService = userService;
     }
 
     @PostMapping
-    public ResponseEntity<UserDto> save(@Valid @RequestBody UserDto dto) {
+    public ResponseEntity<UserDto> addUser(@Valid @RequestBody UserDto dto) {
 
-        final UserDto savedUser = service.save(dto);
-
-        URI resource = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(savedUser.getId())
-                .toUri();
+        final UserDto savedUser = userService.save(dto);
+        final URI location = fromCurrentRequestAndAppend(savedUser.getId());
 
         return ResponseEntity
-                .created(resource)
+                .created(location)
                 .body(savedUser);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserDto> getById(@PathVariable Long id) {
+    @PostMapping("/email")
+    public ResponseEntity<EmailDto> addEmailToUser(@Valid @RequestBody NewEmailDTO emailDto) {
 
-        final UserDto dto = service.findById(id);
-        return ResponseEntity.ok(dto);
+        final EmailDto savedEmail = userService.addEmailToUser(emailDto);
+        final URI location = fromCurrentRequestAndAppend(savedEmail.getId());
+
+        return ResponseEntity
+                .created(location)
+                .body(savedEmail);
     }
 
-    @GetMapping
-    public ResponseEntity<UserDto> getByLastName(@RequestParam(value = "lastname") String lastName) {
+    @PostMapping("/phoneNumber")
+    public ResponseEntity<PhoneNumberDto> addPhoneNumberToUser(@Valid @RequestBody NewPhoneNumberDTO phoneNumberDto) {
 
-        final UserDto dto = service.findByLastName(lastName);
+        final PhoneNumberDto savedPhoneNumber = userService.addPhoneNumberToUser(phoneNumberDto);
+        URI location = fromCurrentRequestAndAppend(savedPhoneNumber.getId());
+
+        return ResponseEntity
+                .created(location)
+                .body(savedPhoneNumber);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
+
+        final UserDto dto = userService.getUserById(id);
         return ResponseEntity.ok(dto);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable Long id) {
+    public ResponseEntity deleteUserById(@PathVariable Long id) {
 
-        service.delete(id);
+        userService.delete(id);
         return ResponseEntity
                 .noContent()
                 .build();
+    }
+
+    @GetMapping
+    public ResponseEntity<UserDto> getUserByLastName(@RequestParam(value = "lastname") String lastName) {
+
+        final UserDto dto = userService.findByLastName(lastName);
+        return ResponseEntity.ok(dto);
+    }
+
+    private URI fromCurrentRequestAndAppend(Long variableToAppend) {
+
+        return ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(variableToAppend)
+                .toUri();
     }
 }

@@ -8,6 +8,10 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
+import uservice.user.dto.EmailDto;
+import uservice.user.dto.NewEmailDTO;
+import uservice.user.dto.NewPhoneNumberDTO;
+import uservice.user.dto.PhoneNumberDto;
 import uservice.user.dto.UserDto;
 
 import static io.restassured.RestAssured.given;
@@ -28,7 +32,7 @@ public class UserControllerTest {
     @Order(1)
     public void testSave() {
 
-        final UserDto returnedUser = given()
+        final UserDto responseUser = given()
                 .port(port)
                 .contentType("application/json")
                 .body(userToBeSaved)
@@ -41,7 +45,7 @@ public class UserControllerTest {
                 .extract()
                 .body().as(UserDto.class);
 
-        assertEqualUser(userToBeSaved, returnedUser);
+        assertEqualUser(userToBeSaved, responseUser);
     }
 
     @Test
@@ -60,8 +64,54 @@ public class UserControllerTest {
     }
 
     @Test
-    @DisplayName("Should return 200 with body containing user with matching lastname")
+    @DisplayName("Should return 200 with body containing new email")
     @Order(3)
+    void testAddNewMailToUser() {
+
+        final NewEmailDTO newEmailDTO = EmailFactory.createMailForSaving();
+        final EmailDto responseEmail = given()
+                .port(port)
+                .contentType("application/json")
+                .body(newEmailDTO)
+                .when()
+                .post("/api/user/email")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.CREATED.value())
+                .header("location", containsString("/api/user/email"))
+                .extract()
+                .body().as(EmailDto.class);
+
+        assertEquals(newEmailDTO.getMail(), responseEmail.getMail(), "mail content not matching");
+        assertEquals(newEmailDTO.getUserId(), responseEmail.getUserId(), "user id not matching");
+    }
+
+    @Test
+    @DisplayName("Should return 200 with body containing new phone number")
+    @Order(4)
+    void testAddNewPhoneNumberToUser() {
+
+        final NewPhoneNumberDTO newPhoneNumberDTO = PhoneNumberFactory.createPhoneNumberForSaving();
+        final PhoneNumberDto responseNumber = given()
+                .port(port)
+                .contentType("application/json")
+                .body(newPhoneNumberDTO)
+                .when()
+                .post("/api/user/phoneNumber")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.CREATED.value())
+                .header("location", containsString("/api/user/phoneNumber"))
+                .extract()
+                .body().as(PhoneNumberDto.class);
+
+        assertEquals(newPhoneNumberDTO.getNumber(), responseNumber.getNumber(), "numbers not matching");
+        assertEquals(newPhoneNumberDTO.getUserId(), responseNumber.getUserId(), "user id not matching");
+    }
+
+    @Test
+    @DisplayName("Should return 200 with body containing user with matching lastname")
+    @Order(5)
     void testReturnByName() {
 
         given()
@@ -75,7 +125,7 @@ public class UserControllerTest {
 
     @Test
     @DisplayName("Should return 204 on resource deletion")
-    @Order(4)
+    @Order(6)
     void testDelete() {
 
         given()

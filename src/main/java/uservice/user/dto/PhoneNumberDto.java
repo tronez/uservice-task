@@ -6,6 +6,10 @@ public class PhoneNumberDto {
     private String number;
     private Long userId;
 
+    public static PhoneNumberDto fromNewPhoneNumberDTO(NewPhoneNumberDTO newPhoneNumberDTO) {
+        return new PhoneNumberDto(null, newPhoneNumberDTO.getNumber(), newPhoneNumberDTO.getUserId());
+    }
+
     public Long getId() {
         return id;
     }

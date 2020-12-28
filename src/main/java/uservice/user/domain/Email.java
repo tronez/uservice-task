@@ -1,7 +1,6 @@
 package uservice.user.domain;
 
 import uservice.user.dto.EmailDto;
-
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -17,7 +16,6 @@ class Email {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String mail;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -49,7 +47,7 @@ class Email {
         return this;
     }
 
-    EmailDto toDto() {
+    EmailDto toDTO() {
         return new EmailDto(id, mail, user.getId());
     }
 }

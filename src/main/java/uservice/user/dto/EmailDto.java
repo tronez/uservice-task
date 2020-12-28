@@ -9,6 +9,10 @@ public class EmailDto {
     private String mail;
     private Long userId;
 
+    public static EmailDto fromNewEmailDTO(NewEmailDTO newEmailDTO) {
+        return new EmailDto(null, newEmailDTO.getMail(), newEmailDTO.getUserId());
+    }
+
     public Long getId() {
         return id;
     }
@@ -26,5 +30,4 @@ public class EmailDto {
         this.mail = mail;
         this.userId = userId;
     }
-
 }

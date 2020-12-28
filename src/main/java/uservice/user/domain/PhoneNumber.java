@@ -17,7 +17,6 @@ class PhoneNumber {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String number;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -49,7 +48,7 @@ class PhoneNumber {
         return this;
     }
 
-    PhoneNumberDto toDto() {
+    PhoneNumberDto toDTO() {
         return new PhoneNumberDto(id, number, user.getId());
     }
 }

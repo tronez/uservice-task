@@ -21,10 +21,8 @@ class User {
     private Long id;
     private String lastName;
     private String firstName;
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Email> emails;
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PhoneNumber> phoneNumber;
 
@@ -74,14 +72,14 @@ class User {
     }
 
     UserDto toDto() {
-        final Set<EmailDto> emailDtos = emails.stream()
-                .map(Email::toDto)
+        Set<EmailDto> emailDTOS = emails.stream()
+                .map(Email::toDTO)
                 .collect(Collectors.toSet());
 
-        final Set<PhoneNumberDto> phoneNumberDtos = phoneNumber.stream()
-                .map(PhoneNumber::toDto)
+        Set<PhoneNumberDto> phoneNumberDTOS = phoneNumber.stream()
+                .map(PhoneNumber::toDTO)
                 .collect(Collectors.toSet());
 
-        return new UserDto(id, firstName, lastName, emailDtos, phoneNumberDtos);
+        return new UserDto(id, firstName, lastName, emailDTOS, phoneNumberDTOS);
     }
 }
