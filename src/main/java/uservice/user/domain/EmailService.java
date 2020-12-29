@@ -4,19 +4,18 @@ import org.springframework.stereotype.Service;
 import uservice.user.dto.EmailDto;
 
 @Service
-public class EmailService {
+class EmailService {
 
-    private EmailRepository repository;
-    private EmailMapper mapper;
+    private final EmailRepository repository;
 
-    public EmailService(EmailRepository repository, EmailMapper mapper) {
+    EmailService(EmailRepository repository) {
         this.repository = repository;
-        this.mapper = mapper;
     }
 
-    public Email saveEmail(EmailDto emailDto, User user) {
-        final Email email = mapper.toEntity(emailDto);
-        email.setUser(user);
+    Email saveEmail(EmailDto emailDto, User user) {
+
+        final Email email = Email.createFromDTO(emailDto, user);
+
         return repository.save(email);
     }
 }

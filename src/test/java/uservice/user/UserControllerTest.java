@@ -133,7 +133,7 @@ public class UserControllerTest {
                 .delete("/api/user/1")
                 .then()
                 .assertThat()
-                .statusCode(HttpStatus.NO_CONTENT.value());
+                .statusCode(HttpStatus.OK.value());
     }
 
     private void assertEqualUser(UserDto newUser, UserDto retrievedUser) {

@@ -26,52 +26,72 @@ class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PhoneNumber> phoneNumber;
 
-    public Long getId() {
+    static User createFromDTO(UserDto dto) {
+
+        User entity = new User();
+        final Set<Email> emails = dto.getEmails().stream()
+                .map(emailDto -> Email.createFromDTO(emailDto, entity))
+                .collect(Collectors.toSet());
+        final Set<PhoneNumber> phoneNumbers = dto.getPhoneNumber().stream()
+                .map(phoneNumberDto -> PhoneNumber.createFromDTO(phoneNumberDto, entity))
+                .collect(Collectors.toSet());
+
+        entity
+                .setId(dto.getId())
+                .setFirstName(dto.getFirstName())
+                .setLastName(dto.getLastName())
+                .setEmails(emails)
+                .setPhoneNumber(phoneNumbers);
+
+        return entity;
+    }
+
+    Long getId() {
         return id;
     }
 
-    public User setId(Long id) {
+    User setId(Long id) {
         this.id = id;
         return this;
     }
 
-    public String getLastName() {
+    String getLastName() {
         return lastName;
     }
 
-    public User setLastName(String lastName) {
+    User setLastName(String lastName) {
         this.lastName = lastName;
         return this;
     }
 
-    public String getFirstName() {
+    String getFirstName() {
         return firstName;
     }
 
-    public User setFirstName(String firstName) {
+    User setFirstName(String firstName) {
         this.firstName = firstName;
         return this;
     }
 
-    public Set<Email> getEmails() {
+    Set<Email> getEmails() {
         return emails;
     }
 
-    public User setEmails(Set<Email> emails) {
+    User setEmails(Set<Email> emails) {
         this.emails = emails;
         return this;
     }
 
-    public Set<PhoneNumber> getPhoneNumber() {
+    Set<PhoneNumber> getPhoneNumber() {
         return phoneNumber;
     }
 
-    public User setPhoneNumber(Set<PhoneNumber> phoneNumber) {
+    User setPhoneNumber(Set<PhoneNumber> phoneNumber) {
         this.phoneNumber = phoneNumber;
         return this;
     }
 
-    UserDto toDto() {
+    UserDto toDTO() {
         Set<EmailDto> emailDTOS = emails.stream()
                 .map(Email::toDTO)
                 .collect(Collectors.toSet());

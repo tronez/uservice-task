@@ -1,5 +1,6 @@
 package uservice.user.dto;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.util.Set;
@@ -11,8 +12,10 @@ public class UserDto {
     private String firstName;
     @NotBlank(message = "User's last name can't be empty!")
     private String lastName;
+    @Valid
     @NotEmpty(message = "User has to have at least one email")
     private Set<EmailDto> emails;
+    @Valid
     @NotEmpty(message = "User has to have at least one phone number")
     private Set<PhoneNumberDto> phoneNumber;
 

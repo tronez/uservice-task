@@ -21,29 +21,42 @@ class PhoneNumber {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Long getId() {
+    PhoneNumber() {
+    }
+
+    PhoneNumber(Long id, String number, User user) {
+        this.id = id;
+        this.number = number;
+        this.user = user;
+    }
+
+    static PhoneNumber createFromDTO(PhoneNumberDto phoneNumberDto, User user) {
+        return new PhoneNumber(phoneNumberDto.getId(), phoneNumberDto.getNumber(), user);
+    }
+
+    Long getId() {
         return id;
     }
 
-    public PhoneNumber setId(Long id) {
+    PhoneNumber setId(Long id) {
         this.id = id;
         return this;
     }
 
-    public String getNumber() {
+    String getNumber() {
         return number;
     }
 
-    public PhoneNumber setNumber(String number) {
+    PhoneNumber setNumber(String number) {
         this.number = number;
         return this;
     }
 
-    public User getUser() {
+    User getUser() {
         return user;
     }
 
-    public PhoneNumber setUser(User user) {
+    PhoneNumber setUser(User user) {
         this.user = user;
         return this;
     }

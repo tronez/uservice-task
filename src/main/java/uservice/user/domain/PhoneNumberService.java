@@ -4,19 +4,18 @@ import org.springframework.stereotype.Service;
 import uservice.user.dto.PhoneNumberDto;
 
 @Service
-public class PhoneNumberService {
+class PhoneNumberService {
 
     private PhoneNumberRepository repository;
-    private PhoneNumberMapper mapper;
 
-    public PhoneNumberService(PhoneNumberRepository repository, PhoneNumberMapper mapper) {
+    PhoneNumberService(PhoneNumberRepository repository) {
         this.repository = repository;
-        this.mapper = mapper;
     }
 
-    public PhoneNumber savePhoneNumber(PhoneNumberDto phoneNumberDto, User user) {
-        final PhoneNumber phoneNumber = mapper.toEntity(phoneNumberDto);
-        phoneNumber.setUser(user);
+    PhoneNumber savePhoneNumber(PhoneNumberDto phoneNumberDto, User user) {
+
+        final PhoneNumber phoneNumber = PhoneNumber.createFromDTO(phoneNumberDto, user);
+
         return repository.save(phoneNumber);
     }
 }
