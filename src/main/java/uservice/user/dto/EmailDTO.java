@@ -13,6 +13,12 @@ public class EmailDTO {
         return new EmailDTO(null, newEmailDTO.getMail(), newEmailDTO.getUserId());
     }
 
+    public EmailDTO(Long id, String mail, Long userId) {
+        this.id = id;
+        this.mail = mail;
+        this.userId = userId;
+    }
+
     public Long getId() {
         return id;
     }
@@ -23,11 +29,5 @@ public class EmailDTO {
 
     public Long getUserId() {
         return userId;
-    }
-
-    public EmailDTO(Long id, String mail, Long userId) {
-        this.id = id;
-        this.mail = mail;
-        this.userId = userId;
     }
 }

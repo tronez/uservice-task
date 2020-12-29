@@ -21,6 +21,10 @@ class PhoneNumber {
     @JoinColumn(name = "user_id")
     private User user;
 
+    static PhoneNumber createFromDTO(PhoneNumberDTO phoneNumberDTO, User user) {
+        return new PhoneNumber(phoneNumberDTO.getId(), phoneNumberDTO.getNumber(), user);
+    }
+
     PhoneNumber() {
     }
 
@@ -28,10 +32,6 @@ class PhoneNumber {
         this.id = id;
         this.number = number;
         this.user = user;
-    }
-
-    static PhoneNumber createFromDTO(PhoneNumberDTO phoneNumberDTO, User user) {
-        return new PhoneNumber(phoneNumberDTO.getId(), phoneNumberDTO.getNumber(), user);
     }
 
     Long getId() {

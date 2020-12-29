@@ -3,7 +3,8 @@ package uservice.user.dto;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import java.util.Set;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserDTO {
 
@@ -14,10 +15,30 @@ public class UserDTO {
     private String lastName;
     @Valid
     @NotEmpty(message = "User has to have at least one email")
-    private Set<EmailDTO> emails;
+    private List<EmailDTO> emails;
     @Valid
     @NotEmpty(message = "User has to have at least one phone number")
-    private Set<PhoneNumberDTO> phoneNumber;
+    private List<PhoneNumberDTO> phoneNumber;
+
+    public static UserDTO fromNewUserDTO(NewUserDTO dto) {
+        final List<EmailDTO> emailDTOS = dto.getEmails().stream()
+                .map(EmailDTO::fromNewEmailDTO)
+                .collect(Collectors.toList());
+        final List<PhoneNumberDTO> phoneNumberDTOS = dto.getPhoneNumber().stream()
+                .map(PhoneNumberDTO::fromNewPhoneNumberDTO)
+                .collect(Collectors.toList());
+
+        return new UserDTO(null, dto.getFirstName(), dto.getLastName(), emailDTOS, phoneNumberDTOS);
+    }
+
+    public UserDTO(Long id, String firstName, String lastName, List<EmailDTO> emails,
+                   List<PhoneNumberDTO> phoneNumber) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.emails = emails;
+        this.phoneNumber = phoneNumber;
+    }
 
     public Long getId() {
         return id;
@@ -31,19 +52,11 @@ public class UserDTO {
         return firstName;
     }
 
-    public Set<EmailDTO> getEmails() {
+    public List<EmailDTO> getEmails() {
         return emails;
     }
 
-    public Set<PhoneNumberDTO> getPhoneNumber() {
+    public List<PhoneNumberDTO> getPhoneNumber() {
         return phoneNumber;
-    }
-
-    public UserDTO(Long id, String firstName, String lastName, Set<EmailDTO> emails, Set<PhoneNumberDTO> phoneNumber) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.emails = emails;
-        this.phoneNumber = phoneNumber;
     }
 }

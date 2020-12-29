@@ -10,6 +10,12 @@ public class PhoneNumberDTO {
         return new PhoneNumberDTO(null, newPhoneNumberDTO.getNumber(), newPhoneNumberDTO.getUserId());
     }
 
+    public PhoneNumberDTO(Long id, String number, Long userId) {
+        this.id = id;
+        this.number = number;
+        this.userId = userId;
+    }
+
     public Long getId() {
         return id;
     }
@@ -20,11 +26,5 @@ public class PhoneNumberDTO {
 
     public Long getUserId() {
         return userId;
-    }
-
-    public PhoneNumberDTO(Long id, String number, Long userId) {
-        this.id = id;
-        this.number = number;
-        this.userId = userId;
     }
 }

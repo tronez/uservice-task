@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import uservice.user.dto.EmailDTO;
 import uservice.user.dto.NewEmailDTO;
 import uservice.user.dto.NewPhoneNumberDTO;
+import uservice.user.dto.NewUserDTO;
 import uservice.user.dto.PhoneNumberDTO;
 import uservice.user.dto.UserDTO;
 
@@ -20,7 +21,8 @@ public class UserFacade {
         this.phoneNumberService = phoneNumberService;
     }
 
-    public UserDTO saveUser(UserDTO userDTO) {
+    public UserDTO saveUser(NewUserDTO newUserDTO) {
+        final UserDTO userDTO = UserDTO.fromNewUserDTO(newUserDTO);
         return userService.save(userDTO);
     }
 

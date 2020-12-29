@@ -15,6 +15,7 @@ import uservice.user.domain.UserFacade;
 import uservice.user.dto.EmailDTO;
 import uservice.user.dto.NewEmailDTO;
 import uservice.user.dto.NewPhoneNumberDTO;
+import uservice.user.dto.NewUserDTO;
 import uservice.user.dto.PhoneNumberDTO;
 import uservice.user.dto.UserDTO;
 
@@ -32,9 +33,9 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> addUser(@Valid @RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> addUser(@Valid @RequestBody NewUserDTO newUserDTO) {
 
-        final UserDTO savedUser = userFacade.saveUser(userDTO);
+        final UserDTO savedUser = userFacade.saveUser(newUserDTO);
         final URI location = fromCurrentRequestAndAppend(savedUser.getId());
 
         return ResponseEntity
@@ -85,12 +86,12 @@ public class UserController {
         return ResponseEntity.ok(dto);
     }
 
-    private URI fromCurrentRequestAndAppend(Long variableToAppend) {
+    private URI fromCurrentRequestAndAppend(Long idToAppend) {
 
         return ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(variableToAppend)
+                .buildAndExpand(idToAppend)
                 .toUri();
     }
 }
