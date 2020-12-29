@@ -1,7 +1,7 @@
 package uservice.user.domain;
 
 import org.springframework.stereotype.Service;
-import uservice.user.dto.EmailDto;
+import uservice.user.dto.EmailDTO;
 
 @Service
 class EmailService {
@@ -12,9 +12,9 @@ class EmailService {
         this.repository = repository;
     }
 
-    Email saveEmail(EmailDto emailDto, User user) {
+    Email saveEmail(EmailDTO emailDTO, User user) {
 
-        final Email email = Email.createFromDTO(emailDto, user);
+        final Email email = Email.createFromDTO(emailDTO, user);
 
         return repository.save(email);
     }

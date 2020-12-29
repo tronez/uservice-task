@@ -2,9 +2,9 @@ package uservice.user.domain;
 
 import org.springframework.stereotype.Service;
 import uservice.exception.ResourceNotFoundException;
-import uservice.user.dto.EmailDto;
-import uservice.user.dto.PhoneNumberDto;
-import uservice.user.dto.UserDto;
+import uservice.user.dto.EmailDTO;
+import uservice.user.dto.PhoneNumberDTO;
+import uservice.user.dto.UserDTO;
 
 @Service
 class UserService {
@@ -22,24 +22,24 @@ class UserService {
         this.phoneNumberService = phoneNumberService;
     }
 
-    UserDto save(UserDto dto) {
+    UserDTO save(UserDTO userDTO) {
 
-        final User userToSave = User.createFromDTO(dto);
+        final User userToSave = User.createFromDTO(userDTO);
         final User savedUser = repository.save(userToSave);
         return savedUser.toDTO();
     }
 
-    EmailDto addEmailToUser(EmailDto emailDto) {
+    EmailDTO addEmailToUser(EmailDTO emailDTO) {
 
-        final User user = findByIdOrThrow(emailDto.getUserId());
-        final Email email = emailService.saveEmail(emailDto, user);
+        final User user = findByIdOrThrow(emailDTO.getUserId());
+        final Email email = emailService.saveEmail(emailDTO, user);
         return email.toDTO();
     }
 
-    PhoneNumberDto addPhoneNumberToUser(PhoneNumberDto phoneNumberDto) {
+    PhoneNumberDTO addPhoneNumberToUser(PhoneNumberDTO phoneNumberDTO) {
 
-        final User user = findByIdOrThrow(phoneNumberDto.getUserId());
-        final PhoneNumber phoneNumber = phoneNumberService.savePhoneNumber(phoneNumberDto, user);
+        final User user = findByIdOrThrow(phoneNumberDTO.getUserId());
+        final PhoneNumber phoneNumber = phoneNumberService.savePhoneNumber(phoneNumberDTO, user);
         return phoneNumber.toDTO();
     }
 

@@ -2,15 +2,15 @@ package uservice.user.dto;
 
 import javax.validation.constraints.Email;
 
-public class EmailDto {
+public class EmailDTO {
 
     private Long id;
     @Email(message = "Wrong email format!")
     private String mail;
     private Long userId;
 
-    public static EmailDto fromNewEmailDTO(NewEmailDTO newEmailDTO) {
-        return new EmailDto(null, newEmailDTO.getMail(), newEmailDTO.getUserId());
+    public static EmailDTO fromNewEmailDTO(NewEmailDTO newEmailDTO) {
+        return new EmailDTO(null, newEmailDTO.getMail(), newEmailDTO.getUserId());
     }
 
     public Long getId() {
@@ -25,7 +25,7 @@ public class EmailDto {
         return userId;
     }
 
-    public EmailDto(Long id, String mail, Long userId) {
+    public EmailDTO(Long id, String mail, Long userId) {
         this.id = id;
         this.mail = mail;
         this.userId = userId;

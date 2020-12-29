@@ -1,11 +1,11 @@
 package uservice.user.domain;
 
 import org.springframework.stereotype.Service;
-import uservice.user.dto.EmailDto;
+import uservice.user.dto.EmailDTO;
 import uservice.user.dto.NewEmailDTO;
 import uservice.user.dto.NewPhoneNumberDTO;
-import uservice.user.dto.PhoneNumberDto;
-import uservice.user.dto.UserDto;
+import uservice.user.dto.PhoneNumberDTO;
+import uservice.user.dto.UserDTO;
 
 @Service
 public class UserFacade {
@@ -20,27 +20,27 @@ public class UserFacade {
         this.phoneNumberService = phoneNumberService;
     }
 
-    public UserDto saveUser(UserDto userDto) {
-        return userService.save(userDto);
+    public UserDTO saveUser(UserDTO userDTO) {
+        return userService.save(userDTO);
     }
 
-    public EmailDto addEmailToUser(NewEmailDTO newEmailDTO) {
-        final EmailDto emailDto = EmailDto.fromNewEmailDTO(newEmailDTO);
+    public EmailDTO addEmailToUser(NewEmailDTO newEmailDTO) {
+        final EmailDTO emailDto = EmailDTO.fromNewEmailDTO(newEmailDTO);
         return userService.addEmailToUser(emailDto);
     }
 
-    public PhoneNumberDto addPhoneNumberToUser(NewPhoneNumberDTO newPhoneNumberDTO){
-        final PhoneNumberDto phoneNumberDto = PhoneNumberDto.fromNewPhoneNumberDTO(newPhoneNumberDTO);
+    public PhoneNumberDTO addPhoneNumberToUser(NewPhoneNumberDTO newPhoneNumberDTO){
+        final PhoneNumberDTO phoneNumberDto = PhoneNumberDTO.fromNewPhoneNumberDTO(newPhoneNumberDTO);
         return userService.addPhoneNumberToUser(phoneNumberDto);
     }
 
-    public UserDto findUserById(Long id){
+    public UserDTO findUserById(Long id){
         return userService
                 .findByIdOrThrow(id)
                 .toDTO();
     }
 
-    public UserDto findUserByLastName(String lastName){
+    public UserDTO findUserByLastName(String lastName){
         return userService
                 .findByLastName(lastName)
                 .toDTO();

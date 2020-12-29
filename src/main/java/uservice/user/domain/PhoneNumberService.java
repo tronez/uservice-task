@@ -1,7 +1,7 @@
 package uservice.user.domain;
 
 import org.springframework.stereotype.Service;
-import uservice.user.dto.PhoneNumberDto;
+import uservice.user.dto.PhoneNumberDTO;
 
 @Service
 class PhoneNumberService {
@@ -12,9 +12,9 @@ class PhoneNumberService {
         this.repository = repository;
     }
 
-    PhoneNumber savePhoneNumber(PhoneNumberDto phoneNumberDto, User user) {
+    PhoneNumber savePhoneNumber(PhoneNumberDTO phoneNumberDTO, User user) {
 
-        final PhoneNumber phoneNumber = PhoneNumber.createFromDTO(phoneNumberDto, user);
+        final PhoneNumber phoneNumber = PhoneNumber.createFromDTO(phoneNumberDTO, user);
 
         return repository.save(phoneNumber);
     }

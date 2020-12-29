@@ -3,7 +3,6 @@ package uservice.user.dto;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
 
 public class NewEmailDTO {
 

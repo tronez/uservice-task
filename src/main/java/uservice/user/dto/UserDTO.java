@@ -5,7 +5,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
-public class UserDto {
+public class UserDTO {
 
     private Long id;
     @NotBlank(message = "User's first name can't be empty!")
@@ -14,10 +14,10 @@ public class UserDto {
     private String lastName;
     @Valid
     @NotEmpty(message = "User has to have at least one email")
-    private Set<EmailDto> emails;
+    private Set<EmailDTO> emails;
     @Valid
     @NotEmpty(message = "User has to have at least one phone number")
-    private Set<PhoneNumberDto> phoneNumber;
+    private Set<PhoneNumberDTO> phoneNumber;
 
     public Long getId() {
         return id;
@@ -31,15 +31,15 @@ public class UserDto {
         return firstName;
     }
 
-    public Set<EmailDto> getEmails() {
+    public Set<EmailDTO> getEmails() {
         return emails;
     }
 
-    public Set<PhoneNumberDto> getPhoneNumber() {
+    public Set<PhoneNumberDTO> getPhoneNumber() {
         return phoneNumber;
     }
 
-    public UserDto(Long id, String firstName, String lastName, Set<EmailDto> emails, Set<PhoneNumberDto> phoneNumber) {
+    public UserDTO(Long id, String firstName, String lastName, Set<EmailDTO> emails, Set<PhoneNumberDTO> phoneNumber) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;

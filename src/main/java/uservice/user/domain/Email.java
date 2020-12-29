@@ -1,6 +1,6 @@
 package uservice.user.domain;
 
-import uservice.user.dto.EmailDto;
+import uservice.user.dto.EmailDTO;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -21,8 +21,8 @@ class Email {
     @JoinColumn(name = "user_id")
     private User user;
 
-    static Email createFromDTO(EmailDto emailDto, User user) {
-        return new Email(emailDto.getId(), emailDto.getMail(), user);
+    static Email createFromDTO(EmailDTO emailDTO, User user) {
+        return new Email(emailDTO.getId(), emailDTO.getMail(), user);
     }
 
     Email() {
@@ -56,7 +56,7 @@ class Email {
         return this;
     }
 
-    EmailDto toDTO() {
-        return new EmailDto(id, mail, user.getId());
+    EmailDTO toDTO() {
+        return new EmailDTO(id, mail, user.getId());
     }
 }

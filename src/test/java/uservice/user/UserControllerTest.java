@@ -8,11 +8,11 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
-import uservice.user.dto.EmailDto;
+import uservice.user.dto.EmailDTO;
 import uservice.user.dto.NewEmailDTO;
 import uservice.user.dto.NewPhoneNumberDTO;
-import uservice.user.dto.PhoneNumberDto;
-import uservice.user.dto.UserDto;
+import uservice.user.dto.PhoneNumberDTO;
+import uservice.user.dto.UserDTO;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.containsString;
@@ -25,14 +25,14 @@ public class UserControllerTest {
     @LocalServerPort
     private int port;
 
-    private final UserDto userToBeSaved = UserFactory.createUserForSaving();
+    private final UserDTO userToBeSaved = UserFactory.createUserForSaving();
 
     @Test
     @DisplayName("Should return 201 Http status with body and uri pointing to newly created resource")
     @Order(1)
     public void testSave() {
 
-        final UserDto responseUser = given()
+        final UserDTO responseUser = given()
                 .port(port)
                 .contentType("application/json")
                 .body(userToBeSaved)
@@ -43,7 +43,7 @@ public class UserControllerTest {
                 .statusCode(HttpStatus.CREATED.value())
                 .header("location", containsString("/api/user/"))
                 .extract()
-                .body().as(UserDto.class);
+                .body().as(UserDTO.class);
 
         assertEqualUser(userToBeSaved, responseUser);
     }
@@ -60,7 +60,7 @@ public class UserControllerTest {
                 .assertThat()
                 .statusCode(HttpStatus.OK.value())
                 .extract()
-                .body().as(UserDto.class);
+                .body().as(UserDTO.class);
     }
 
     @Test
@@ -69,7 +69,7 @@ public class UserControllerTest {
     void testAddNewMailToUser() {
 
         final NewEmailDTO newEmailDTO = EmailFactory.createMailForSaving();
-        final EmailDto responseEmail = given()
+        final EmailDTO responseEmail = given()
                 .port(port)
                 .contentType("application/json")
                 .body(newEmailDTO)
@@ -80,7 +80,7 @@ public class UserControllerTest {
                 .statusCode(HttpStatus.CREATED.value())
                 .header("location", containsString("/api/user/email"))
                 .extract()
-                .body().as(EmailDto.class);
+                .body().as(EmailDTO.class);
 
         assertEquals(newEmailDTO.getMail(), responseEmail.getMail(), "mail content not matching");
         assertEquals(newEmailDTO.getUserId(), responseEmail.getUserId(), "user id not matching");
@@ -92,7 +92,7 @@ public class UserControllerTest {
     void testAddNewPhoneNumberToUser() {
 
         final NewPhoneNumberDTO newPhoneNumberDTO = PhoneNumberFactory.createPhoneNumberForSaving();
-        final PhoneNumberDto responseNumber = given()
+        final PhoneNumberDTO responseNumber = given()
                 .port(port)
                 .contentType("application/json")
                 .body(newPhoneNumberDTO)
@@ -103,7 +103,7 @@ public class UserControllerTest {
                 .statusCode(HttpStatus.CREATED.value())
                 .header("location", containsString("/api/user/phoneNumber"))
                 .extract()
-                .body().as(PhoneNumberDto.class);
+                .body().as(PhoneNumberDTO.class);
 
         assertEquals(newPhoneNumberDTO.getNumber(), responseNumber.getNumber(), "numbers not matching");
         assertEquals(newPhoneNumberDTO.getUserId(), responseNumber.getUserId(), "user id not matching");
@@ -120,7 +120,7 @@ public class UserControllerTest {
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.OK.value()).extract()
-                .body().as(UserDto.class);
+                .body().as(UserDTO.class);
     }
 
     @Test
@@ -136,7 +136,7 @@ public class UserControllerTest {
                 .statusCode(HttpStatus.OK.value());
     }
 
-    private void assertEqualUser(UserDto newUser, UserDto retrievedUser) {
+    private void assertEqualUser(UserDTO newUser, UserDTO retrievedUser) {
         assertEquals(newUser.getFirstName(), retrievedUser.getFirstName());
         assertEquals(newUser.getLastName(), retrievedUser.getLastName());
         assertEquals(newUser.getEmails().size(), retrievedUser.getEmails().size());

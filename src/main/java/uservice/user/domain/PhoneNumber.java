@@ -1,6 +1,6 @@
 package uservice.user.domain;
 
-import uservice.user.dto.PhoneNumberDto;
+import uservice.user.dto.PhoneNumberDTO;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -30,8 +30,8 @@ class PhoneNumber {
         this.user = user;
     }
 
-    static PhoneNumber createFromDTO(PhoneNumberDto phoneNumberDto, User user) {
-        return new PhoneNumber(phoneNumberDto.getId(), phoneNumberDto.getNumber(), user);
+    static PhoneNumber createFromDTO(PhoneNumberDTO phoneNumberDTO, User user) {
+        return new PhoneNumber(phoneNumberDTO.getId(), phoneNumberDTO.getNumber(), user);
     }
 
     Long getId() {
@@ -61,7 +61,7 @@ class PhoneNumber {
         return this;
     }
 
-    PhoneNumberDto toDTO() {
-        return new PhoneNumberDto(id, number, user.getId());
+    PhoneNumberDTO toDTO() {
+        return new PhoneNumberDTO(id, number, user.getId());
     }
 }

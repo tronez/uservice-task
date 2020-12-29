@@ -1,8 +1,8 @@
 package uservice.user.domain;
 
-import uservice.user.dto.EmailDto;
-import uservice.user.dto.PhoneNumberDto;
-import uservice.user.dto.UserDto;
+import uservice.user.dto.EmailDTO;
+import uservice.user.dto.PhoneNumberDTO;
+import uservice.user.dto.UserDTO;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -26,20 +26,20 @@ class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PhoneNumber> phoneNumber;
 
-    static User createFromDTO(UserDto dto) {
+    static User createFromDTO(UserDTO userDTO) {
 
         User entity = new User();
-        final Set<Email> emails = dto.getEmails().stream()
-                .map(emailDto -> Email.createFromDTO(emailDto, entity))
+        final Set<Email> emails = userDTO.getEmails().stream()
+                .map(emailDTO -> Email.createFromDTO(emailDTO, entity))
                 .collect(Collectors.toSet());
-        final Set<PhoneNumber> phoneNumbers = dto.getPhoneNumber().stream()
-                .map(phoneNumberDto -> PhoneNumber.createFromDTO(phoneNumberDto, entity))
+        final Set<PhoneNumber> phoneNumbers = userDTO.getPhoneNumber().stream()
+                .map(phoneNumberDTO -> PhoneNumber.createFromDTO(phoneNumberDTO, entity))
                 .collect(Collectors.toSet());
 
         entity
-                .setId(dto.getId())
-                .setFirstName(dto.getFirstName())
-                .setLastName(dto.getLastName())
+                .setId(userDTO.getId())
+                .setFirstName(userDTO.getFirstName())
+                .setLastName(userDTO.getLastName())
                 .setEmails(emails)
                 .setPhoneNumber(phoneNumbers);
 
@@ -91,15 +91,15 @@ class User {
         return this;
     }
 
-    UserDto toDTO() {
-        Set<EmailDto> emailDTOS = emails.stream()
+    UserDTO toDTO() {
+        Set<EmailDTO> emailDTOS = emails.stream()
                 .map(Email::toDTO)
                 .collect(Collectors.toSet());
 
-        Set<PhoneNumberDto> phoneNumberDTOS = phoneNumber.stream()
+        Set<PhoneNumberDTO> phoneNumberDTOS = phoneNumber.stream()
                 .map(PhoneNumber::toDTO)
                 .collect(Collectors.toSet());
 
-        return new UserDto(id, firstName, lastName, emailDTOS, phoneNumberDTOS);
+        return new UserDTO(id, firstName, lastName, emailDTOS, phoneNumberDTOS);
     }
 }
