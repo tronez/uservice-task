@@ -1,10 +1,10 @@
 package uservice.user;
 
-import uservice.user.dto.NewPhoneNumberDTO;
+import uservice.user.dto.NewPhoneNumberRequest;
 
 class PhoneNumberFactory {
 
-    static NewPhoneNumberDTO createPhoneNumberForSaving() {
-        return new NewPhoneNumberDTO("123456789", 1L);
+    static NewPhoneNumberRequest createPhoneNumberForSaving() {
+        return new NewPhoneNumberRequest("123456789", 1L);
     }
 }

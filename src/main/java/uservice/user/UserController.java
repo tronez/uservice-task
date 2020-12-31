@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import uservice.user.domain.UserFacade;
-import uservice.user.dto.EmailDTO;
-import uservice.user.dto.NewEmailDTO;
-import uservice.user.dto.NewPhoneNumberDTO;
-import uservice.user.dto.NewUserDTO;
-import uservice.user.dto.PhoneNumberDTO;
-import uservice.user.dto.UserDTO;
+import uservice.user.dto.EmailResponse;
+import uservice.user.dto.NewEmailRequest;
+import uservice.user.dto.NewPhoneNumberRequest;
+import uservice.user.dto.UserRequest;
+import uservice.user.dto.PhoneNumberResponse;
+import uservice.user.dto.UserResponse;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -33,9 +33,9 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> addUser(@Valid @RequestBody NewUserDTO newUserDTO) {
+    public ResponseEntity<UserResponse> addUser(@Valid @RequestBody UserRequest userRequest) {
 
-        final UserDTO savedUser = userFacade.saveUser(newUserDTO);
+        final UserResponse savedUser = userFacade.saveUser(userRequest);
         final URI location = fromCurrentRequestAndAppend(savedUser.getId());
 
         return ResponseEntity
@@ -44,9 +44,9 @@ public class UserController {
     }
 
     @PostMapping("/email")
-    public ResponseEntity<EmailDTO> addEmailToUser(@Valid @RequestBody NewEmailDTO newEmailDTO) {
+    public ResponseEntity<EmailResponse> addEmailToUser(@Valid @RequestBody NewEmailRequest newEmailRequest) {
 
-        final EmailDTO savedEmail = userFacade.addEmailToUser(newEmailDTO);
+        final EmailResponse savedEmail = userFacade.addEmailToUser(newEmailRequest);
         final URI location = fromCurrentRequestAndAppend(savedEmail.getId());
 
         return ResponseEntity
@@ -55,9 +55,9 @@ public class UserController {
     }
 
     @PostMapping("/phoneNumber")
-    public ResponseEntity<PhoneNumberDTO> addPhoneNumberToUser(@Valid @RequestBody NewPhoneNumberDTO newPhoneNumberDTO) {
+    public ResponseEntity<PhoneNumberResponse> addPhoneNumberToUser(@Valid @RequestBody NewPhoneNumberRequest newPhoneNumberRequest) {
 
-        final PhoneNumberDTO savedPhoneNumber = userFacade.addPhoneNumberToUser(newPhoneNumberDTO);
+        final PhoneNumberResponse savedPhoneNumber = userFacade.addPhoneNumberToUser(newPhoneNumberRequest);
         final URI location = fromCurrentRequestAndAppend(savedPhoneNumber.getId());
 
         return ResponseEntity
@@ -66,9 +66,9 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
+    public ResponseEntity<UserResponse> getUserById(@PathVariable Long id) {
 
-        final UserDTO dto = userFacade.findUserById(id);
+        final UserResponse dto = userFacade.findUserById(id);
         return ResponseEntity.ok(dto);
     }
 
@@ -80,9 +80,9 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<UserDTO> getUserByLastName(@RequestParam(value = "lastname") String lastName) {
+    public ResponseEntity<UserResponse> getUserByLastName(@RequestParam(value = "lastname") String lastName) {
 
-        final UserDTO dto = userFacade.findUserByLastName(lastName);
+        final UserResponse dto = userFacade.findUserByLastName(lastName);
         return ResponseEntity.ok(dto);
     }
 

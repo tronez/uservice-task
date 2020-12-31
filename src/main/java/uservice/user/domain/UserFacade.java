@@ -1,12 +1,12 @@
 package uservice.user.domain;
 
 import org.springframework.stereotype.Service;
-import uservice.user.dto.EmailDTO;
-import uservice.user.dto.NewEmailDTO;
-import uservice.user.dto.NewPhoneNumberDTO;
-import uservice.user.dto.NewUserDTO;
-import uservice.user.dto.PhoneNumberDTO;
-import uservice.user.dto.UserDTO;
+import uservice.user.dto.EmailResponse;
+import uservice.user.dto.NewEmailRequest;
+import uservice.user.dto.NewPhoneNumberRequest;
+import uservice.user.dto.UserRequest;
+import uservice.user.dto.PhoneNumberResponse;
+import uservice.user.dto.UserResponse;
 
 @Service
 public class UserFacade {
@@ -21,28 +21,28 @@ public class UserFacade {
         this.phoneNumberService = phoneNumberService;
     }
 
-    public UserDTO saveUser(NewUserDTO newUserDTO) {
-        final UserDTO userDTO = UserDTO.fromNewUserDTO(newUserDTO);
-        return userService.save(userDTO);
+    public UserResponse saveUser(UserRequest userRequest) {
+        final UserResponse userResponse = UserResponse.fromNewUserDTO(userRequest);
+        return userService.save(userResponse);
     }
 
-    public EmailDTO addEmailToUser(NewEmailDTO newEmailDTO) {
-        final EmailDTO emailDto = EmailDTO.fromNewEmailDTO(newEmailDTO);
-        return userService.addEmailToUser(emailDto);
+    public EmailResponse addEmailToUser(NewEmailRequest newEmailRequest) {
+        final EmailResponse emailResponse = EmailResponse.fromNewEmailRequest(newEmailRequest);
+        return userService.addEmailToUser(emailResponse);
     }
 
-    public PhoneNumberDTO addPhoneNumberToUser(NewPhoneNumberDTO newPhoneNumberDTO){
-        final PhoneNumberDTO phoneNumberDto = PhoneNumberDTO.fromNewPhoneNumberDTO(newPhoneNumberDTO);
-        return userService.addPhoneNumberToUser(phoneNumberDto);
+    public PhoneNumberResponse addPhoneNumberToUser(NewPhoneNumberRequest newPhoneNumberRequest){
+        final PhoneNumberResponse phoneNumberResponse = PhoneNumberResponse.fromNewPhoneNumberRequest(newPhoneNumberRequest);
+        return userService.addPhoneNumberToUser(phoneNumberResponse);
     }
 
-    public UserDTO findUserById(Long id){
+    public UserResponse findUserById(Long id){
         return userService
                 .findByIdOrThrow(id)
                 .toDTO();
     }
 
-    public UserDTO findUserByLastName(String lastName){
+    public UserResponse findUserByLastName(String lastName){
         return userService
                 .findByLastName(lastName)
                 .toDTO();

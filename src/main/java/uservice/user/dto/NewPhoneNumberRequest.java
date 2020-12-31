@@ -1,11 +1,11 @@
 package uservice.user.dto;
 
-public class NewPhoneNumberDTO {
+public class NewPhoneNumberRequest {
 
     private String number;
     private Long userId;
 
-    public NewPhoneNumberDTO(String number, Long userId) {
+    public NewPhoneNumberRequest(String number, Long userId) {
         this.number = number;
         this.userId = userId;
     }

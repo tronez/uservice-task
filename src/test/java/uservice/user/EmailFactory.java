@@ -1,10 +1,10 @@
 package uservice.user;
 
-import uservice.user.dto.NewEmailDTO;
+import uservice.user.dto.NewEmailRequest;
 
 class EmailFactory {
 
-    static NewEmailDTO createMailForSaving() {
-        return new NewEmailDTO("simple@gmail.com", 1L);
+    static NewEmailRequest createMailForSaving() {
+        return new NewEmailRequest("simple@gmail.com", 1L);
     }
 }

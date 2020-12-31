@@ -1,6 +1,6 @@
 package uservice.user.domain;
 
-import uservice.user.dto.EmailDTO;
+import uservice.user.dto.EmailResponse;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -21,17 +21,17 @@ class Email {
     @JoinColumn(name = "user_id")
     private User user;
 
-    static Email createFromDTO(EmailDTO emailDTO, User user) {
-        return new Email(emailDTO.getId(), emailDTO.getMail(), user);
-    }
-
-    Email() {
+    static Email createFromDTO(EmailResponse emailResponse, User user) {
+        return new Email(emailResponse.getId(), emailResponse.getMail(), user);
     }
 
     Email(Long id, String mail, User user) {
         this.id = id;
         this.mail = mail;
         this.user = user;
+    }
+
+    Email() {
     }
 
     Long getId() {
@@ -56,7 +56,7 @@ class Email {
         return this;
     }
 
-    EmailDTO toDTO() {
-        return new EmailDTO(id, mail, user.getId());
+    EmailResponse toDTO() {
+        return new EmailResponse(id, mail, user.getId());
     }
 }

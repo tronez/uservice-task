@@ -5,7 +5,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
-public class NewUserDTO {
+public class UserRequest {
 
     @NotBlank(message = "User's first name can't be empty!")
     private String firstName;
@@ -13,10 +13,10 @@ public class NewUserDTO {
     private String lastName;
     @Valid
     @NotEmpty(message = "User has to have at least one email")
-    private List<NewEmailDTO> emails;
+    private List<EmailRequest> emails;
     @Valid
     @NotEmpty(message = "User has to have at least one phone number")
-    private List<NewPhoneNumberDTO> phoneNumber;
+    private List<PhoneNumberRequest> phoneNumbers;
 
     public String getFirstName() {
         return firstName;
@@ -26,11 +26,11 @@ public class NewUserDTO {
         return lastName;
     }
 
-    public List<NewEmailDTO> getEmails() {
+    public List<EmailRequest> getEmails() {
         return emails;
     }
 
-    public List<NewPhoneNumberDTO> getPhoneNumber() {
-        return phoneNumber;
+    public List<PhoneNumberRequest> getPhoneNumbers() {
+        return phoneNumbers;
     }
 }

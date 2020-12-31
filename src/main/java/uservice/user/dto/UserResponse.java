@@ -6,7 +6,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UserDTO {
+public class UserResponse {
 
     private Long id;
     @NotBlank(message = "User's first name can't be empty!")
@@ -15,24 +15,24 @@ public class UserDTO {
     private String lastName;
     @Valid
     @NotEmpty(message = "User has to have at least one email")
-    private List<EmailDTO> emails;
+    private List<EmailResponse> emails;
     @Valid
     @NotEmpty(message = "User has to have at least one phone number")
-    private List<PhoneNumberDTO> phoneNumber;
+    private List<PhoneNumberResponse> phoneNumber;
 
-    public static UserDTO fromNewUserDTO(NewUserDTO dto) {
-        final List<EmailDTO> emailDTOS = dto.getEmails().stream()
-                .map(EmailDTO::fromNewEmailDTO)
+    public static UserResponse fromNewUserDTO(UserRequest dto) {
+        final List<EmailResponse> emailResponses = dto.getEmails().stream()
+                .map(EmailResponse::fromEmailRequest)
                 .collect(Collectors.toList());
-        final List<PhoneNumberDTO> phoneNumberDTOS = dto.getPhoneNumber().stream()
-                .map(PhoneNumberDTO::fromNewPhoneNumberDTO)
+        final List<PhoneNumberResponse> phoneNumberResponses = dto.getPhoneNumbers().stream()
+                .map(PhoneNumberResponse::fromPhoneNumberRequest)
                 .collect(Collectors.toList());
 
-        return new UserDTO(null, dto.getFirstName(), dto.getLastName(), emailDTOS, phoneNumberDTOS);
+        return new UserResponse(null, dto.getFirstName(), dto.getLastName(), emailResponses, phoneNumberResponses);
     }
 
-    public UserDTO(Long id, String firstName, String lastName, List<EmailDTO> emails,
-                   List<PhoneNumberDTO> phoneNumber) {
+    public UserResponse(Long id, String firstName, String lastName, List<EmailResponse> emails,
+                        List<PhoneNumberResponse> phoneNumber) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -52,11 +52,11 @@ public class UserDTO {
         return firstName;
     }
 
-    public List<EmailDTO> getEmails() {
+    public List<EmailResponse> getEmails() {
         return emails;
     }
 
-    public List<PhoneNumberDTO> getPhoneNumber() {
+    public List<PhoneNumberResponse> getPhoneNumber() {
         return phoneNumber;
     }
 }

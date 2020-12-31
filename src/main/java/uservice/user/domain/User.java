@@ -1,8 +1,8 @@
 package uservice.user.domain;
 
-import uservice.user.dto.EmailDTO;
-import uservice.user.dto.PhoneNumberDTO;
-import uservice.user.dto.UserDTO;
+import uservice.user.dto.EmailResponse;
+import uservice.user.dto.PhoneNumberResponse;
+import uservice.user.dto.UserResponse;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -27,20 +27,20 @@ class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PhoneNumber> phoneNumber;
 
-    static User createFromDTO(UserDTO userDTO) {
+    static User createFromDTO(UserResponse userResponse) {
 
         User entity = new User();
-        final Set<Email> emails = userDTO.getEmails().stream()
+        final Set<Email> emails = userResponse.getEmails().stream()
                 .map(emailDTO -> Email.createFromDTO(emailDTO, entity))
                 .collect(Collectors.toSet());
-        final Set<PhoneNumber> phoneNumbers = userDTO.getPhoneNumber().stream()
+        final Set<PhoneNumber> phoneNumbers = userResponse.getPhoneNumber().stream()
                 .map(phoneNumberDTO -> PhoneNumber.createFromDTO(phoneNumberDTO, entity))
                 .collect(Collectors.toSet());
 
         entity
-                .setId(userDTO.getId())
-                .setFirstName(userDTO.getFirstName())
-                .setLastName(userDTO.getLastName())
+                .setId(userResponse.getId())
+                .setFirstName(userResponse.getFirstName())
+                .setLastName(userResponse.getLastName())
                 .setEmails(emails)
                 .setPhoneNumber(phoneNumbers);
 
@@ -92,15 +92,15 @@ class User {
         return this;
     }
 
-    UserDTO toDTO() {
-        List<EmailDTO> emailDTOS = emails.stream()
+    UserResponse toDTO() {
+        List<EmailResponse> emailResponses = emails.stream()
                 .map(Email::toDTO)
                 .collect(Collectors.toList());
 
-        List<PhoneNumberDTO> phoneNumberDTOS = phoneNumber.stream()
+        List<PhoneNumberResponse> phoneNumberResponses = phoneNumber.stream()
                 .map(PhoneNumber::toDTO)
                 .collect(Collectors.toList());
 
-        return new UserDTO(id, firstName, lastName, emailDTOS, phoneNumberDTOS);
+        return new UserResponse(id, firstName, lastName, emailResponses, phoneNumberResponses);
     }
 }
