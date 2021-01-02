@@ -1,6 +1,6 @@
 package uservice.user.domain;
 
-import uservice.user.dto.EmailResponse;
+import uservice.user.dto.EmailDTO;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.util.Objects;
 
 @Entity
 class Email {
@@ -21,8 +22,8 @@ class Email {
     @JoinColumn(name = "user_id")
     private User user;
 
-    static Email createFromDTO(EmailResponse emailResponse, User user) {
-        return new Email(emailResponse.getId(), emailResponse.getMail(), user);
+    static Email createFromDTO(EmailDTO emailDTO, User user) {
+        return new Email(emailDTO.getId(), emailDTO.getMail(), user);
     }
 
     Email(Long id, String mail, User user) {
@@ -56,7 +57,25 @@ class Email {
         return this;
     }
 
-    EmailResponse toDTO() {
-        return new EmailResponse(id, mail, user.getId());
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    EmailDTO toDTO() {
+        return new EmailDTO(id, mail, user.getId());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Email email = (Email) o;
+        return id.equals(email.id) &&
+                mail.equals(email.mail);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, mail);
     }
 }

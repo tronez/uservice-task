@@ -15,24 +15,24 @@ public class UserResponse {
     private String lastName;
     @Valid
     @NotEmpty(message = "User has to have at least one email")
-    private List<EmailResponse> emails;
+    private List<EmailDTO> emails;
     @Valid
     @NotEmpty(message = "User has to have at least one phone number")
-    private List<PhoneNumberResponse> phoneNumber;
+    private List<PhoneNumberDTO> phoneNumber;
 
     public static UserResponse fromNewUserDTO(UserRequest dto) {
-        final List<EmailResponse> emailResponses = dto.getEmails().stream()
-                .map(EmailResponse::fromEmailRequest)
+        final List<EmailDTO> emailDTOS = dto.getEmails().stream()
+                .map(EmailDTO::fromEmailRequest)
                 .collect(Collectors.toList());
-        final List<PhoneNumberResponse> phoneNumberResponses = dto.getPhoneNumbers().stream()
-                .map(PhoneNumberResponse::fromPhoneNumberRequest)
+        final List<PhoneNumberDTO> phoneNumberDTOS = dto.getPhoneNumbers().stream()
+                .map(PhoneNumberDTO::fromPhoneNumberRequest)
                 .collect(Collectors.toList());
 
-        return new UserResponse(null, dto.getFirstName(), dto.getLastName(), emailResponses, phoneNumberResponses);
+        return new UserResponse(null, dto.getFirstName(), dto.getLastName(), emailDTOS, phoneNumberDTOS);
     }
 
-    public UserResponse(Long id, String firstName, String lastName, List<EmailResponse> emails,
-                        List<PhoneNumberResponse> phoneNumber) {
+    public UserResponse(Long id, String firstName, String lastName, List<EmailDTO> emails,
+                        List<PhoneNumberDTO> phoneNumber) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -52,11 +52,11 @@ public class UserResponse {
         return firstName;
     }
 
-    public List<EmailResponse> getEmails() {
+    public List<EmailDTO> getEmails() {
         return emails;
     }
 
-    public List<PhoneNumberResponse> getPhoneNumber() {
+    public List<PhoneNumberDTO> getPhoneNumber() {
         return phoneNumber;
     }
 }

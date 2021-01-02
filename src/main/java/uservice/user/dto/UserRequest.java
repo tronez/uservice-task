@@ -18,6 +18,18 @@ public class UserRequest {
     @NotEmpty(message = "User has to have at least one phone number")
     private List<PhoneNumberRequest> phoneNumbers;
 
+    public UserRequest(String firstName, String lastName,
+                       List<EmailRequest> emails, List<PhoneNumberRequest> phoneNumbers) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.emails = emails;
+        this.phoneNumbers = phoneNumbers;
+    }
+
+    public UserRequest() {
+
+    }
+
     public String getFirstName() {
         return firstName;
     }

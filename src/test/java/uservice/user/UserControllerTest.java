@@ -8,10 +8,13 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
-import uservice.user.dto.EmailResponse;
+import uservice.user.dto.EmailDTO;
+import uservice.user.dto.EmailRequest;
 import uservice.user.dto.NewEmailRequest;
 import uservice.user.dto.NewPhoneNumberRequest;
-import uservice.user.dto.PhoneNumberResponse;
+import uservice.user.dto.PhoneNumberDTO;
+import uservice.user.dto.PhoneNumberRequest;
+import uservice.user.dto.UserRequest;
 import uservice.user.dto.UserResponse;
 
 import static io.restassured.RestAssured.given;
@@ -25,10 +28,10 @@ public class UserControllerTest {
     @LocalServerPort
     private int port;
 
-    private final UserResponse userToBeSaved = UserFactory.createUserForSaving();
+    private final UserRequest userToBeSaved = UserFactory.createUserForSaving();
 
     @Test
-    @DisplayName("Should return 201 Http status with body and uri pointing to newly created resource")
+    @DisplayName("Should return 201 Http status with body and uri pointing to newly created user resource")
     @Order(1)
     public void testSave() {
 
@@ -69,7 +72,7 @@ public class UserControllerTest {
     void testAddNewMailToUser() {
 
         final NewEmailRequest newEmailRequest = EmailFactory.createMailForSaving();
-        final EmailResponse responseEmail = given()
+        final EmailDTO responseEmail = given()
                 .port(port)
                 .contentType("application/json")
                 .body(newEmailRequest)
@@ -80,7 +83,7 @@ public class UserControllerTest {
                 .statusCode(HttpStatus.CREATED.value())
                 .header("location", containsString("/api/user/email"))
                 .extract()
-                .body().as(EmailResponse.class);
+                .body().as(EmailDTO.class);
 
         assertEquals(newEmailRequest.getMail(), responseEmail.getMail(), "mail content not matching");
         assertEquals(newEmailRequest.getUserId(), responseEmail.getUserId(), "user id not matching");
@@ -92,7 +95,7 @@ public class UserControllerTest {
     void testAddNewPhoneNumberToUser() {
 
         final NewPhoneNumberRequest newPhoneNumberRequest = PhoneNumberFactory.createPhoneNumberForSaving();
-        final PhoneNumberResponse responseNumber = given()
+        final PhoneNumberDTO responseNumber = given()
                 .port(port)
                 .contentType("application/json")
                 .body(newPhoneNumberRequest)
@@ -103,9 +106,9 @@ public class UserControllerTest {
                 .statusCode(HttpStatus.CREATED.value())
                 .header("location", containsString("/api/user/phoneNumber"))
                 .extract()
-                .body().as(PhoneNumberResponse.class);
+                .body().as(PhoneNumberDTO.class);
 
-        assertEquals(newPhoneNumberRequest.getNumber(), responseNumber.getNumber(), "numbers not matching");
+        assertEquals(newPhoneNumberRequest.getPhoneNumber(), responseNumber.getNumber(), "numbers not matching");
         assertEquals(newPhoneNumberRequest.getUserId(), responseNumber.getUserId(), "user id not matching");
     }
 
@@ -119,13 +122,54 @@ public class UserControllerTest {
                 .get("/api/user?lastname=" + userToBeSaved.getLastName())
                 .then()
                 .assertThat()
-                .statusCode(HttpStatus.OK.value()).extract()
+                .statusCode(HttpStatus.OK.value())
+                .extract()
                 .body().as(UserResponse.class);
     }
 
     @Test
-    @DisplayName("Should return 204 on resource deletion")
+    @DisplayName("Should return 201 Http status with body and uri pointing to newly created email resource")
     @Order(6)
+    void testUpdateEmail() {
+
+        final EmailRequest emailToUpdate = EmailFactory.createMailForUpdate();
+
+        given()
+                .port(port)
+                .contentType("application/json")
+                .body(emailToUpdate)
+                .when()
+                .patch("/api/user/1/email/1")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.OK.value())
+                .extract()
+                .body().as(EmailDTO.class);
+    }
+
+    @Test
+    @DisplayName("Should return 201 Http status with body and uri pointing to newly created phone number resource")
+    @Order(7)
+    void testUpdatePhoneNumber() {
+
+        final PhoneNumberRequest numberToUpdate = PhoneNumberFactory.createPhoneNumberForUpdate();
+
+        given()
+                .port(port)
+                .contentType("application/json")
+                .body(numberToUpdate)
+                .when()
+                .patch("/api/user/1/phoneNumber/1")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.OK.value())
+                .extract()
+                .body().as(PhoneNumberDTO.class);
+    }
+
+    @Test
+    @DisplayName("Should return 204 on resource deletion")
+    @Order(8)
     void testDelete() {
 
         given()
@@ -136,10 +180,10 @@ public class UserControllerTest {
                 .statusCode(HttpStatus.OK.value());
     }
 
-    private void assertEqualUser(UserResponse newUser, UserResponse retrievedUser) {
+    private void assertEqualUser(UserRequest newUser, UserResponse retrievedUser) {
         assertEquals(newUser.getFirstName(), retrievedUser.getFirstName());
         assertEquals(newUser.getLastName(), retrievedUser.getLastName());
         assertEquals(newUser.getEmails().size(), retrievedUser.getEmails().size());
-        assertEquals(newUser.getPhoneNumber().size(), retrievedUser.getPhoneNumber().size());
+        assertEquals(newUser.getPhoneNumbers().size(), retrievedUser.getPhoneNumber().size());
     }
 }

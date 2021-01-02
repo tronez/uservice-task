@@ -1,7 +1,7 @@
 package uservice.user.domain;
 
-import uservice.user.dto.EmailResponse;
-import uservice.user.dto.PhoneNumberResponse;
+import uservice.user.dto.EmailDTO;
+import uservice.user.dto.PhoneNumberDTO;
 import uservice.user.dto.UserResponse;
 
 import javax.persistence.CascadeType;
@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -74,6 +75,14 @@ class User {
         return this;
     }
 
+    boolean containsEmail(Email email) {
+        return getEmails().contains(email);
+    }
+
+    boolean containsPhoneNumber(PhoneNumber phoneNumber) {
+        return getPhoneNumbers().contains(phoneNumber);
+    }
+
     Set<Email> getEmails() {
         return emails;
     }
@@ -83,7 +92,7 @@ class User {
         return this;
     }
 
-    Set<PhoneNumber> getPhoneNumber() {
+    Set<PhoneNumber> getPhoneNumbers() {
         return phoneNumber;
     }
 
@@ -93,14 +102,31 @@ class User {
     }
 
     UserResponse toDTO() {
-        List<EmailResponse> emailResponses = emails.stream()
+        List<EmailDTO> emailResponses = emails.stream()
                 .map(Email::toDTO)
                 .collect(Collectors.toList());
 
-        List<PhoneNumberResponse> phoneNumberResponses = phoneNumber.stream()
+        List<PhoneNumberDTO> phoneNumberResponses = phoneNumber.stream()
                 .map(PhoneNumber::toDTO)
                 .collect(Collectors.toList());
 
         return new UserResponse(id, firstName, lastName, emailResponses, phoneNumberResponses);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id) &&
+                Objects.equals(lastName, user.lastName) &&
+                Objects.equals(firstName, user.firstName) &&
+                Objects.equals(emails, user.emails) &&
+                Objects.equals(phoneNumber, user.phoneNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, lastName, firstName, emails, phoneNumber);
     }
 }

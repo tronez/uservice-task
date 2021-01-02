@@ -1,17 +1,20 @@
 package uservice.user.dto;
 
+import org.hibernate.validator.constraints.Length;
+
 public class NewPhoneNumberRequest {
 
-    private String number;
+    @Length(min = 9, max = 9, message = "Phone number must consist of 9 digits")
+    private String phoneNumber;
     private Long userId;
 
-    public NewPhoneNumberRequest(String number, Long userId) {
-        this.number = number;
+    public NewPhoneNumberRequest(String phoneNumber, Long userId) {
+        this.phoneNumber = phoneNumber;
         this.userId = userId;
     }
 
-    public String getNumber() {
-        return number;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     public Long getUserId() {

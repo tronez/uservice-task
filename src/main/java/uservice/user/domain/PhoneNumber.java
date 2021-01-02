@@ -1,6 +1,6 @@
 package uservice.user.domain;
 
-import uservice.user.dto.PhoneNumberResponse;
+import uservice.user.dto.PhoneNumberDTO;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.util.Objects;
 
 @Entity
 class PhoneNumber {
@@ -21,8 +22,8 @@ class PhoneNumber {
     @JoinColumn(name = "user_id")
     private User user;
 
-    static PhoneNumber createFromDTO(PhoneNumberResponse phoneNumberResponse, User user) {
-        return new PhoneNumber(phoneNumberResponse.getId(), phoneNumberResponse.getNumber(), user);
+    static PhoneNumber createFromDTO(PhoneNumberDTO phoneNumberDTO, User user) {
+        return new PhoneNumber(phoneNumberDTO.getId(), phoneNumberDTO.getNumber(), user);
     }
 
     PhoneNumber() {
@@ -61,7 +62,21 @@ class PhoneNumber {
         return this;
     }
 
-    PhoneNumberResponse toDTO() {
-        return new PhoneNumberResponse(id, number, user.getId());
+    PhoneNumberDTO toDTO() {
+        return new PhoneNumberDTO(id, number, user.getId());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PhoneNumber that = (PhoneNumber) o;
+        return id.equals(that.id) &&
+                number.equals(that.number);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, number);
     }
 }
