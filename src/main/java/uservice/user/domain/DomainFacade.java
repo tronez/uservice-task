@@ -23,9 +23,8 @@ public class DomainFacade {
 
     public UserResponse saveUser(UserRequest userRequest) {
 
-        final UserResponse userResponse = UserResponse.fromNewUserDTO(userRequest);
         return userService
-                .save(userResponse)
+                .save(userRequest)
                 .toDTO();
     }
 

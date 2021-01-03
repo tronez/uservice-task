@@ -1,6 +1,7 @@
 package uservice.user.domain;
 
 import uservice.user.dto.EmailDTO;
+import uservice.user.dto.EmailRequest;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -24,6 +25,10 @@ class Email {
 
     static Email createFromDTO(EmailDTO emailDTO, User user) {
         return new Email(emailDTO.getId(), emailDTO.getMail(), user);
+    }
+
+    static Email createFromRequest(EmailRequest emailRequest, User user) {
+        return new Email(null, emailRequest.getEmail(), user);
     }
 
     Email(Long id, String mail, User user) {

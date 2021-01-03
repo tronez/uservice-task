@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import uservice.exception.ResourceNotFoundException;
 import uservice.user.dto.EmailDTO;
 import uservice.user.dto.PhoneNumberDTO;
-import uservice.user.dto.UserResponse;
+import uservice.user.dto.UserRequest;
 
 @Service
 class UserService {
@@ -22,7 +22,7 @@ class UserService {
         this.phoneNumberService = phoneNumberService;
     }
 
-    User save(UserResponse userResponse) {
+    User save(UserRequest userResponse) {
 
         final User userToSave = User.createFromDTO(userResponse);
         return repository.save(userToSave);

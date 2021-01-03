@@ -1,6 +1,5 @@
 package uservice.user;
 
-import uservice.user.dto.EmailRequest;
 import uservice.user.dto.NewPhoneNumberRequest;
 import uservice.user.dto.PhoneNumberRequest;
 

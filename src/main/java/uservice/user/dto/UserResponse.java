@@ -20,7 +20,7 @@ public class UserResponse {
     @NotEmpty(message = "User has to have at least one phone number")
     private List<PhoneNumberDTO> phoneNumber;
 
-    public static UserResponse fromNewUserDTO(UserRequest dto) {
+    public static UserResponse fromUserRequest(UserRequest dto) {
         final List<EmailDTO> emailDTOS = dto.getEmails().stream()
                 .map(EmailDTO::fromEmailRequest)
                 .collect(Collectors.toList());

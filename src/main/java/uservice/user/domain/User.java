@@ -2,6 +2,7 @@ package uservice.user.domain;
 
 import uservice.user.dto.EmailDTO;
 import uservice.user.dto.PhoneNumberDTO;
+import uservice.user.dto.UserRequest;
 import uservice.user.dto.UserResponse;
 
 import javax.persistence.CascadeType;
@@ -28,20 +29,19 @@ class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PhoneNumber> phoneNumber;
 
-    static User createFromDTO(UserResponse userResponse) {
+    static User createFromDTO(UserRequest userRequest) {
 
         User entity = new User();
-        final Set<Email> emails = userResponse.getEmails().stream()
-                .map(emailDTO -> Email.createFromDTO(emailDTO, entity))
+        final Set<Email> emails = userRequest.getEmails().stream()
+                .map(emailDTO -> Email.createFromRequest(emailDTO, entity))
                 .collect(Collectors.toSet());
-        final Set<PhoneNumber> phoneNumbers = userResponse.getPhoneNumber().stream()
-                .map(phoneNumberDTO -> PhoneNumber.createFromDTO(phoneNumberDTO, entity))
+        final Set<PhoneNumber> phoneNumbers = userRequest.getPhoneNumbers().stream()
+                .map(phoneNumberDTO -> PhoneNumber.createFromRequest(phoneNumberDTO, entity))
                 .collect(Collectors.toSet());
 
         entity
-                .setId(userResponse.getId())
-                .setFirstName(userResponse.getFirstName())
-                .setLastName(userResponse.getLastName())
+                .setFirstName(userRequest.getFirstName())
+                .setLastName(userRequest.getLastName())
                 .setEmails(emails)
                 .setPhoneNumber(phoneNumbers);
 
