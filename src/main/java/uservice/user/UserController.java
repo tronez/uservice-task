@@ -76,10 +76,12 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public HttpStatus deleteUserById(@PathVariable Long id) {
+    public ResponseEntity deleteUserById(@PathVariable Long id) {
 
         facade.deleteUserById(id);
-        return HttpStatus.OK;
+        return ResponseEntity
+                .ok()
+                .build();
     }
 
     @PatchMapping("/{userId}/email/{emailId}")
