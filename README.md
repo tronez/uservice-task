@@ -36,10 +36,6 @@ Clone project into you workspace:
 
 Run terminal, change to root directory of project and write:
  
- ```gradlew build```
- 
- Then write this into terminal
- 
  ```gradlew bootRun --args='--spring.profiles.active=local'```
  
 

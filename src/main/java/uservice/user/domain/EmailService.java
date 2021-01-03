@@ -42,7 +42,7 @@ class EmailService {
         throw new ResourceNotFoundException("Couldn't find email for given user");
     }
 
-    private void checkForDuplicateEmailAndThrow(String email) {
+    void checkForDuplicateEmailAndThrow(String email) {
         repository
                 .findByMail(email)
                 .ifPresent(m -> {

@@ -12,4 +12,7 @@ spring:
       enabled: true
 
 server:
+  error:
+    include-message: always
+    include-binding-errors: always
   port: 8080

@@ -24,6 +24,7 @@ class UserService {
 
     User save(UserRequest userResponse) {
 
+
         final User userToSave = User.createFromDTO(userResponse);
         return repository.save(userToSave);
     }
@@ -43,7 +44,7 @@ class UserService {
     User findByLastName(String lastName) {
 
         return repository
-                .findAllByLastNameContaining(lastName)
+                .findFirstByLastNameContaining(lastName)
                 .orElseThrow(() -> new ResourceNotFoundException("User with given last name was not found"));
     }
 

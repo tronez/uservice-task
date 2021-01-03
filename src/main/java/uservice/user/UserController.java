@@ -1,6 +1,5 @@
 package uservice.user;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,9 +16,9 @@ import uservice.user.dto.EmailDTO;
 import uservice.user.dto.EmailRequest;
 import uservice.user.dto.NewEmailRequest;
 import uservice.user.dto.NewPhoneNumberRequest;
+import uservice.user.dto.PhoneNumberDTO;
 import uservice.user.dto.PhoneNumberRequest;
 import uservice.user.dto.UserRequest;
-import uservice.user.dto.PhoneNumberDTO;
 import uservice.user.dto.UserResponse;
 
 import javax.validation.Valid;
