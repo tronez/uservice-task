@@ -1,35 +1,30 @@
 package uservice.user.dto;
 
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
 
 public class PhoneNumberDTO {
 
+    @Range(min = 1L, message = "Phone number id out of range")
     private Long id;
     @Length(min = 9, max = 9, message = "Phone number must consist of 9 digits")
-    private String number;
+    private String phoneNumber;
+    @Range(min = 1L, message = "User id out of range")
     private Long userId;
 
     public static PhoneNumberDTO fromNewPhoneNumberRequest(NewPhoneNumberRequest newPhoneNumberRequest) {
         return new PhoneNumberDTO(newPhoneNumberRequest.getPhoneNumber(), newPhoneNumberRequest.getUserId());
     }
 
-    public static PhoneNumberDTO fromPhoneNumberRequest(PhoneNumberRequest phoneNumberRequest) {
-        return new PhoneNumberDTO(phoneNumberRequest.getPhoneNumber());
-    }
-
-    public PhoneNumberDTO(Long id, String number, Long userId) {
+    public PhoneNumberDTO(Long id, String phoneNumber, Long userId) {
         this.id = id;
-        this.number = number;
+        this.phoneNumber = phoneNumber;
         this.userId = userId;
     }
 
-    public PhoneNumberDTO(String number, Long userId) {
-        this.number = number;
+    public PhoneNumberDTO(String phoneNumber, Long userId) {
+        this.phoneNumber = phoneNumber;
         this.userId = userId;
-    }
-
-    public PhoneNumberDTO(String number) {
-        this.number = number;
     }
 
     public PhoneNumberDTO() {
@@ -39,8 +34,8 @@ public class PhoneNumberDTO {
         return id;
     }
 
-    public String getNumber() {
-        return number;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     public Long getUserId() {

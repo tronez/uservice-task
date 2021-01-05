@@ -9,11 +9,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import uservice.user.dto.EmailDTO;
-import uservice.user.dto.EmailRequest;
 import uservice.user.dto.NewEmailRequest;
 import uservice.user.dto.NewPhoneNumberRequest;
 import uservice.user.dto.PhoneNumberDTO;
-import uservice.user.dto.PhoneNumberRequest;
 import uservice.user.dto.UserRequest;
 import uservice.user.dto.UserResponse;
 
@@ -40,11 +38,11 @@ public class UserControllerTest {
                 .contentType("application/json")
                 .body(userToBeSaved)
                 .when()
-                .post("/api/user")
+                .post("/api/users")
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.CREATED.value())
-                .header("location", containsString("/api/user/"))
+                .header("location", containsString("/api/users/"))
                 .extract()
                 .body().as(UserResponse.class);
 
@@ -58,7 +56,7 @@ public class UserControllerTest {
 
         given()
                 .port(port)
-                .get("/api/user/1")
+                .get("/api/users/1")
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.OK.value())
@@ -77,15 +75,15 @@ public class UserControllerTest {
                 .contentType("application/json")
                 .body(newEmailRequest)
                 .when()
-                .post("/api/user/email")
+                .post("/api/emails")
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.CREATED.value())
-                .header("location", containsString("/api/user/email"))
+                .header("location", containsString("/api/emails"))
                 .extract()
                 .body().as(EmailDTO.class);
 
-        assertEquals(newEmailRequest.getMail(), responseEmail.getMail(), "mail content not matching");
+        assertEquals(newEmailRequest.getEmail(), responseEmail.getEmail(), "mail content not matching");
         assertEquals(newEmailRequest.getUserId(), responseEmail.getUserId(), "user id not matching");
     }
 
@@ -100,26 +98,26 @@ public class UserControllerTest {
                 .contentType("application/json")
                 .body(newPhoneNumberRequest)
                 .when()
-                .post("/api/user/phoneNumber")
+                .post("/api/phone-numbers")
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.CREATED.value())
-                .header("location", containsString("/api/user/phoneNumber"))
+                .header("location", containsString("/api/phone-numbers"))
                 .extract()
                 .body().as(PhoneNumberDTO.class);
 
-        assertEquals(newPhoneNumberRequest.getPhoneNumber(), responseNumber.getNumber(), "numbers not matching");
+        assertEquals(newPhoneNumberRequest.getPhoneNumber(), responseNumber.getPhoneNumber(), "numbers not matching");
         assertEquals(newPhoneNumberRequest.getUserId(), responseNumber.getUserId(), "user id not matching");
     }
 
     @Test
-    @DisplayName("Should return 200 with body containing user with matching lastname")
+    @DisplayName("Should return 200 with body containing user with matching last name")
     @Order(5)
     void testReturnByName() {
 
         given()
                 .port(port)
-                .get("/api/user?lastname=" + userToBeSaved.getLastName())
+                .get("/api/users?last-name=" + userToBeSaved.getLastName())
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.OK.value())
@@ -132,14 +130,14 @@ public class UserControllerTest {
     @Order(6)
     void testUpdateEmail() {
 
-        final EmailRequest emailToUpdate = EmailFactory.createMailForUpdate();
+        final EmailDTO emailToUpdate = EmailFactory.createMailForUpdate();
 
         given()
                 .port(port)
                 .contentType("application/json")
                 .body(emailToUpdate)
                 .when()
-                .patch("/api/user/1/email/1")
+                .put("/api/emails/1")
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.OK.value())
@@ -152,14 +150,14 @@ public class UserControllerTest {
     @Order(7)
     void testUpdatePhoneNumber() {
 
-        final PhoneNumberRequest numberToUpdate = PhoneNumberFactory.createPhoneNumberForUpdate();
+        final PhoneNumberDTO numberToUpdate = PhoneNumberFactory.createPhoneNumberForUpdate();
 
         given()
                 .port(port)
                 .contentType("application/json")
                 .body(numberToUpdate)
                 .when()
-                .patch("/api/user/1/phoneNumber/1")
+                .patch("/api/phone-numbers/1")
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.OK.value())
@@ -174,16 +172,14 @@ public class UserControllerTest {
 
         given()
                 .port(port)
-                .delete("/api/user/1")
+                .delete("/api/users/1")
                 .then()
                 .assertThat()
-                .statusCode(HttpStatus.OK.value());
+                .statusCode(HttpStatus.NO_CONTENT.value());
     }
 
     private void assertEqualUser(UserRequest newUser, UserResponse retrievedUser) {
         assertEquals(newUser.getFirstName(), retrievedUser.getFirstName());
         assertEquals(newUser.getLastName(), retrievedUser.getLastName());
-        assertEquals(newUser.getEmails().size(), retrievedUser.getEmails().size());
-        assertEquals(newUser.getPhoneNumbers().size(), retrievedUser.getPhoneNumber().size());
     }
 }

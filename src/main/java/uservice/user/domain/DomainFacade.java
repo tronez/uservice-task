@@ -36,11 +36,12 @@ public class DomainFacade {
                 .toDTO();
     }
 
-    public EmailDTO updateUserEmail(Long userId, Long emailId, String newEmail) {
+    public EmailDTO updateUserEmail(Long emailId, EmailDTO emailDTO) {
 
-        final User user = userService.findByIdOrThrow(userId);
+        final User user = userService.findByIdOrThrow(emailDTO.getUserId());
+
         return emailService
-                .updateEmail(emailId, user, newEmail)
+                .updateEmail(emailId, user, emailDTO)
                 .toDTO();
     }
 
@@ -52,11 +53,11 @@ public class DomainFacade {
                 .toDTO();
     }
 
-    public PhoneNumberDTO updateUserPhoneNumber(Long userId, Long numberId, String newPhoneNumber) {
+    public PhoneNumberDTO updateUserPhoneNumber(Long numberId, PhoneNumberDTO phoneNumberDTO) {
 
-        final User user = userService.findByIdOrThrow(userId);
+        final User user = userService.findByIdOrThrow(phoneNumberDTO.getUserId());
         return phoneNumberService
-                .updatePhoneNumber(numberId, user, newPhoneNumber)
+                .updatePhoneNumber(numberId, user, phoneNumberDTO)
                 .toDTO();
     }
 

@@ -3,38 +3,29 @@ package uservice.user.dto;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
 
 public class EmailDTO {
 
-    @NotNull(message = "email id cannot be empty")
-    @Range(message = "email id out of range")
+    @Range(min = 1L, message = "email id out of range")
     private Long id;
     @Email(message = "Wrong email format!")
-    private String mail;
+    private String email;
+    @Range(min = 1L, message = "email id out of range")
     private Long userId;
 
     public static EmailDTO fromNewEmailRequest(NewEmailRequest newEmailRequest) {
-        return new EmailDTO(newEmailRequest.getMail(), newEmailRequest.getUserId());
+        return new EmailDTO(newEmailRequest.getEmail(), newEmailRequest.getUserId());
     }
 
-    public static EmailDTO fromEmailRequest(EmailRequest emailRequest) {
-        return new EmailDTO(emailRequest.getEmail());
-    }
-
-    public EmailDTO(Long id, String mail, Long userId) {
+    public EmailDTO(Long id, String email, Long userId) {
         this.id = id;
-        this.mail = mail;
+        this.email = email;
         this.userId = userId;
     }
 
-    public EmailDTO(String mail, Long userId) {
-        this.mail = mail;
+    public EmailDTO(String email, Long userId) {
+        this.email = email;
         this.userId = userId;
-    }
-
-    public EmailDTO(String mail) {
-        this.mail = mail;
     }
 
     public EmailDTO() {
@@ -44,8 +35,8 @@ public class EmailDTO {
         return id;
     }
 
-    public String getMail() {
-        return mail;
+    public String getEmail() {
+        return email;
     }
 
     public Long getUserId() {

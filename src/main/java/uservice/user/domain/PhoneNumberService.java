@@ -16,20 +16,18 @@ class PhoneNumberService {
 
     PhoneNumber savePhoneNumber(PhoneNumberDTO phoneNumberDTO, User user) {
 
-        checkForDuplicatePhoneNumberAndThrow(phoneNumberDTO.getNumber());
+        checkForDuplicatePhoneNumberAndThrow(phoneNumberDTO.getPhoneNumber());
         final PhoneNumber phoneNumber = PhoneNumber.createFromDTO(phoneNumberDTO, user);
 
         return repository.save(phoneNumber);
     }
 
-    PhoneNumber updatePhoneNumber(Long numberId, User user, String newPhoneNumber) {
+    PhoneNumber updatePhoneNumber(Long numberId, User user, PhoneNumberDTO newPhoneNumber) {
 
-        checkForDuplicatePhoneNumberAndThrow(newPhoneNumber);
         PhoneNumber phoneNumber = findByIdOrThrow(numberId);
 
         if (user.containsPhoneNumber(phoneNumber)) {
-            phoneNumber.setNumber(newPhoneNumber);
-            return repository.save(phoneNumber);
+            return savePhoneNumber(newPhoneNumber, user);
         }
 
         throw new ResourceNotFoundException("Couldn't find phone number for given user");

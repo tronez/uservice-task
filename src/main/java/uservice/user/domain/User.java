@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -32,18 +33,11 @@ class User {
     static User createFromDTO(UserRequest userRequest) {
 
         User entity = new User();
-        final Set<Email> emails = userRequest.getEmails().stream()
-                .map(emailDTO -> Email.createFromRequest(emailDTO, entity))
-                .collect(Collectors.toSet());
-        final Set<PhoneNumber> phoneNumbers = userRequest.getPhoneNumbers().stream()
-                .map(phoneNumberDTO -> PhoneNumber.createFromRequest(phoneNumberDTO, entity))
-                .collect(Collectors.toSet());
-
         entity
                 .setFirstName(userRequest.getFirstName())
                 .setLastName(userRequest.getLastName())
-                .setEmails(emails)
-                .setPhoneNumber(phoneNumbers);
+                .setEmails(Collections.emptySet())
+                .setPhoneNumber(Collections.emptySet());
 
         return entity;
     }

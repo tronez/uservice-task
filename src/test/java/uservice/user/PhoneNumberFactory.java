@@ -1,7 +1,7 @@
 package uservice.user;
 
 import uservice.user.dto.NewPhoneNumberRequest;
-import uservice.user.dto.PhoneNumberRequest;
+import uservice.user.dto.PhoneNumberDTO;
 
 class PhoneNumberFactory {
 
@@ -9,7 +9,7 @@ class PhoneNumberFactory {
         return new NewPhoneNumberRequest("666456789", 1L);
     }
 
-    static PhoneNumberRequest createPhoneNumberForUpdate() {
-        return new PhoneNumberRequest("123456666");
+    static PhoneNumberDTO createPhoneNumberForUpdate() {
+        return new PhoneNumberDTO(1L, "123456666", 1L);
     }
 }

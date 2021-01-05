@@ -16,20 +16,18 @@ class EmailService {
 
     Email saveEmail(EmailDTO emailDTO, User user) {
 
-        checkForDuplicateEmailAndThrow(emailDTO.getMail());
+        checkForDuplicateEmailAndThrow(emailDTO.getEmail());
         final Email email = Email.createFromDTO(emailDTO, user);
 
         return repository.save(email);
     }
 
-    Email updateEmail(Long emailId, User user, String newEmail) {
+    Email updateEmail(Long emailId, User user, EmailDTO newEmail) {
 
-        checkForDuplicateEmailAndThrow(newEmail);
-        Email email = findByIdOrThrow(emailId);
+        final Email email = findByIdOrThrow(emailId);
 
         if (user.containsEmail(email)) {
-            email.setMail(newEmail);
-            return repository.save(email);
+            return saveEmail(newEmail, user);
         }
 
         throw new ResourceNotFoundException("Couldn't find email for given user");

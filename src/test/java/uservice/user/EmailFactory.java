@@ -1,6 +1,6 @@
 package uservice.user;
 
-import uservice.user.dto.EmailRequest;
+import uservice.user.dto.EmailDTO;
 import uservice.user.dto.NewEmailRequest;
 
 class EmailFactory {
@@ -9,7 +9,7 @@ class EmailFactory {
         return new NewEmailRequest("simple@gmail.com", 1L);
     }
 
-    static EmailRequest createMailForUpdate() {
-        return new EmailRequest("updatedEmail@gmail.com");
+    static EmailDTO createMailForUpdate() {
+        return new EmailDTO(1L,"updatedEmail@gmail.com", 1L);
     }
 }

@@ -4,7 +4,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class UserResponse {
 
@@ -21,14 +20,7 @@ public class UserResponse {
     private List<PhoneNumberDTO> phoneNumber;
 
     public static UserResponse fromUserRequest(UserRequest dto) {
-        final List<EmailDTO> emailDTOS = dto.getEmails().stream()
-                .map(EmailDTO::fromEmailRequest)
-                .collect(Collectors.toList());
-        final List<PhoneNumberDTO> phoneNumberDTOS = dto.getPhoneNumbers().stream()
-                .map(PhoneNumberDTO::fromPhoneNumberRequest)
-                .collect(Collectors.toList());
-
-        return new UserResponse(null, dto.getFirstName(), dto.getLastName(), emailDTOS, phoneNumberDTOS);
+        return new UserResponse(null, dto.getFirstName(), dto.getLastName(), null, null);
     }
 
     public UserResponse(Long id, String firstName, String lastName, List<EmailDTO> emails,
