@@ -157,7 +157,7 @@ public class UserControllerTest {
                 .contentType("application/json")
                 .body(numberToUpdate)
                 .when()
-                .patch("/api/phone-numbers/1")
+                .put("/api/phone-numbers/1")
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.OK.value())

@@ -3,7 +3,6 @@ package uservice.user;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -97,7 +96,7 @@ public class UserController {
         return ResponseEntity.ok(updatedEmail);
     }
 
-    @PatchMapping("/phone-numbers/{numberId}")
+    @PutMapping("/phone-numbers/{numberId}")
     public ResponseEntity<PhoneNumberDTO> updatePhoneNumber(@PathVariable Long numberId,
                                                             @RequestBody @Valid PhoneNumberDTO phoneNumberDTO) {
 
