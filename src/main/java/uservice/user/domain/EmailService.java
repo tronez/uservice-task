@@ -22,13 +22,6 @@ class EmailService {
         return repository.save(email);
     }
 
-    Email findByIdOrThrow(Long emailID) {
-
-        return repository
-                .findById(emailID)
-                .orElseThrow(() -> new ResourceNotFoundException("Email with given id was not found"));
-    }
-
     Email updateEmail(Long emailId, User user, String newEmail) {
 
         checkForDuplicateEmailAndThrow(newEmail);
@@ -42,7 +35,15 @@ class EmailService {
         throw new ResourceNotFoundException("Couldn't find email for given user");
     }
 
+    Email findByIdOrThrow(Long emailID) {
+
+        return repository
+                .findById(emailID)
+                .orElseThrow(() -> new ResourceNotFoundException("Email with given id was not found"));
+    }
+
     void checkForDuplicateEmailAndThrow(String email) {
+
         repository
                 .findByMail(email)
                 .ifPresent(m -> {

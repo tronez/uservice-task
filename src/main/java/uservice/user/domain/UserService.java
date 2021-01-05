@@ -9,9 +9,9 @@ import uservice.user.dto.UserRequest;
 @Service
 class UserService {
 
-    private UserRepository repository;
-    private EmailService emailService;
-    private PhoneNumberService phoneNumberService;
+    private final UserRepository repository;
+    private final EmailService emailService;
+    private final PhoneNumberService phoneNumberService;
 
     UserService(UserRepository repository,
                 EmailService emailService,
@@ -23,7 +23,6 @@ class UserService {
     }
 
     User save(UserRequest userResponse) {
-
 
         final User userToSave = User.createFromDTO(userResponse);
         return repository.save(userToSave);

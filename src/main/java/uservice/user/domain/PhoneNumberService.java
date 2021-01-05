@@ -8,7 +8,7 @@ import uservice.user.dto.PhoneNumberDTO;
 @Service
 class PhoneNumberService {
 
-    private PhoneNumberRepository repository;
+    private final PhoneNumberRepository repository;
 
     PhoneNumberService(PhoneNumberRepository repository) {
         this.repository = repository;
